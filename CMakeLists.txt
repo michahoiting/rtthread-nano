@@ -5,16 +5,15 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Set up the project
-project(rtthread-nano
-    VERSION 3.1.3
+project(RT-Thread-Nano
+    VERSION 4.0.1
     LANGUAGES C ASM
     )
-
 
 if(NOT DEFINED RT_THREAD_ARCH)
     message(FATAL_ERROR "Error: RT_THREAD_ARCH not defined")
 endif()
-if(NOT DEFINED RT_THREAD_ARCH_TOOLCHAIN)
+if(NOT DEFINED RT_THREAD_TOOLCHAIN)
     message(FATAL_ERROR "Error: RT_THREAD_ARCH_TOOLCHAIN not defined")
 endif()
 
@@ -58,5 +57,5 @@ endif()
 # set(CPACK_VERBATIM_VARIABLES YES)
 # include(CPack)
 
-#add_subdirectory(rt-thread)
-add_subdirectory(gd32vf103-longan-nano-bare-metal-blink)
+#add_subdirectory(gd32vf103-longan-nano-bare-metal-blink)
+add_subdirectory(rt-thread)

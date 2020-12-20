@@ -1,0 +1,12 @@
+#include <newlib.h>
+#include <_newlib_version.h>
+#include <sys/signal.h>
+#include <sys/select.h>
+#include <pthread.h>
+
+const char* version = __VERSION__;
+const int iso_c_visible = __ISO_C_VISIBLE;
+
+#ifdef HAVE_INITFINI_ARRAY
+const int init_fini_array = HAVE_INITFINI_ARRAY;
+#endif

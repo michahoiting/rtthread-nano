@@ -2,6 +2,26 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../rt-thread"
 		}
-	]
+	],
+	"settings": {
+		"files.associations": {
+			"cstring": "c"
+		},
+		"C_Cpp.default.includePath": [ 
+			"/opt/riscv/riscv32-unknown-elf/include",
+			"./rt-thread/bsp/gd32vf103-longan-nano",
+			"./rt-thread/bsp/gd32vf103-longan-nano/board",
+			"./rt-thread/bsp/gd32vf103-longan-nano/libraries/GD32VF103_standard_peripheral",
+			"./rt-thread/bsp/gd32vf103-longan-nano/libraries/GD32VF103_standard_peripheral/Include",
+			"./rt-thread/bsp/gd32vf103-longan-nano/libraries/n22/drivers",
+			"./rt-thread/bsp/gd32vf103-longan-nano/libraries/n22/stubs",
+			"./rt-thread/include",
+			"./libcpu/risc-v/bumblebee",
+			"./libcpu/risc-v/common"
+		 ]
+	}
 }

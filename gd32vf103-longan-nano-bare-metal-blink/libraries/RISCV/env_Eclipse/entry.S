@@ -246,7 +246,6 @@ trap_entry:
 .weak irq_entry
 irq_entry: // -------------> This label will be set to MTVT2 register
   // Allocate the stack space
-  
 
   SAVE_CONTEXT// Save 16 regs
 
@@ -275,9 +274,7 @@ service_loop:
   LOAD x5,  17*REGBYTES(sp)
   csrw CSR_MCAUSE, x5  
 
-
   RESTORE_CONTEXT
-
   
   // Return to regular code
   mret
