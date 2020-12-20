@@ -33,7 +33,6 @@ static void systick_config(rt_uint32_t ticks) {
 }
 
 /* This is the timer interrupt service routine. */
-__attribute__((interrupt))
 void eclic_mtip_handler(void) {
 
     // Increment the global 'tick' value.
