@@ -26,17 +26,14 @@ static void systick_delay_ms(uint32_t ms) {
 }
 
 static int main_loop(void) {
-
-    rcu_periph_clock_enable(RCU_AF);
- 
     gd_longan_nano_led_init(LED1);
     gd_longan_nano_led_init(LED2);
 
     gd_longan_nano_led_on(LED2);
 
     /* enable interrupt */
-    enable_timer_interrupt();
-    eclic_irq_enable(CLIC_INT_TMR, 0, 0);
+//    enable_timer_interrupt();
+//    eclic_irq_enable(CLIC_INT_TMR, 0, 0);
 
     while (1)
     {

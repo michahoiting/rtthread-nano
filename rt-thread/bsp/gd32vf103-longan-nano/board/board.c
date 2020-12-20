@@ -29,8 +29,7 @@ static void systick_config(rt_uint32_t ticks) {
     *(rt_uint64_t *) (TMR_CTRL_ADDR + TMR_MTIME) = 0;
 
     /* enable interrupt */
-//   enable_timer_interrupt();
-//    eclic_irq_enable(CLIC_INT_TMR, 0, 0);
+    eclic_irq_enable(CLIC_INT_TMR, 0, 0);
 }
 
 /* This is the timer interrupt service routine. */
