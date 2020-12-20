@@ -41,13 +41,13 @@ void eclic_mtip_handler(void) {
     /* clear value */
     *(volatile rt_uint64_t *) (TMR_CTRL_ADDR + TMR_MTIME) = 0;
 
-    // /* enter interrupt */
-    // rt_interrupt_enter();
-    // /* tick increase */
-    // rt_tick_increase();
+    /* enter interrupt */
+    rt_interrupt_enter();
+    /* tick increase */
+    rt_tick_increase();
 
-    // /* leave interrupt */
-    // rt_interrupt_leave();
+    /* leave interrupt */
+    rt_interrupt_leave();
 }
 
 /* fixed misaligned bug for qemu */

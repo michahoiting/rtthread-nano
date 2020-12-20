@@ -31,10 +31,6 @@ static int main_loop(void) {
 
     gd_longan_nano_led_on(LED2);
 
-    /* enable interrupt */
-//    enable_timer_interrupt();
-//    eclic_irq_enable(CLIC_INT_TMR, 0, 0);
-
     while (1)
     {
         gd_longan_nano_led_on(LED1);
