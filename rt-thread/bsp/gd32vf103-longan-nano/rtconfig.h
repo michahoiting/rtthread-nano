@@ -20,10 +20,10 @@
 #define RT_TIMER_THREAD_PRIO 4
 #define RT_TIMER_THREAD_STACK_SIZE 512
 #define RT_DEBUG 1
-#define RT_DEBUG_INIT 1
-#define RT_DEBUG_SCHEDULER 1
-#define RT_DEBUG_TIMER 1
-#define RT_DEBUG_THREAD 1
+// #define RT_DEBUG_INIT 1
+// #define RT_DEBUG_SCHEDULER 1
+// #define RT_DEBUG_TIMER 1
+// #define RT_DEBUG_THREAD 1
 
 /* Inter-Thread communication */
 
@@ -42,7 +42,6 @@
 /* Kernel Device Object */
 
 // #define RT_USING_DEVICE
-
 #define RT_USING_CONSOLE 1
 #define RT_CONSOLEBUF_SIZE 128
 // #define RT_CONSOLE_DEVICE_NAME "uart0"
@@ -157,12 +156,12 @@
 
 /* Onboard Peripheral Drivers */
 
-// #define BSP_USING_USART
+#define BSP_USING_USART 1
 
 /* On-chip Peripheral Drivers */
 
-// #define BSP_USING_UART
-// #define BSP_USING_UART0
+#define BSP_USING_UART 1
+#define BSP_USING_UART0 1
 
 /* Board extended module Drivers */
 

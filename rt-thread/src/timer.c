@@ -539,7 +539,7 @@ void rt_timer_check(void)
     register rt_base_t level;
     rt_list_t list = RT_LIST_OBJECT_INIT(list);
 
-//    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check enter\n"));
+    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check enter\n"));
 
     current_tick = rt_tick_get();
 
@@ -607,7 +607,7 @@ void rt_timer_check(void)
         has_timer_fired = 0;
     }
 
-//    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check leave\n"));
+    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check leave\n"));
 }
 
 /**

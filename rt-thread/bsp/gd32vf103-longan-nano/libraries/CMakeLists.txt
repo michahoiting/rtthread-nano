@@ -12,17 +12,6 @@ target_sources(${PROJECT_NAME}
 
     ${CMAKE_CURRENT_LIST_DIR}/n22/drivers/n22_func.c
 
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/read.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/sbrk.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/close.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/fstat.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/write.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/write_hex.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/lseek.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/stub.h
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/_exit.c
-    ${CMAKE_CURRENT_LIST_DIR}/n22/stubs/isatty.c
-
     ${CMAKE_CURRENT_LIST_DIR}/GD32VF103_standard_peripheral/system_gd32vf103.c
 
     ${CMAKE_CURRENT_LIST_DIR}/GD32VF103_standard_peripheral/Source/gd32vf103_crc.c
