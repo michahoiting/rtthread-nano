@@ -11,12 +11,8 @@
 
 #ifndef __BOARD__
 #define __BOARD__
-#include "gd32vf103.h"
 
-extern void *_end;
-extern void *_heap_end;
-#define HEAP_BEGIN  &_end
-#define HEAP_END    &_heap_end
+#include "gd32vf103_longan_nano.h"
 
 void rt_hw_board_init(void);
 

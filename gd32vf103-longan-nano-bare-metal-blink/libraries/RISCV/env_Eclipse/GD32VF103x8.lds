@@ -160,7 +160,7 @@ SECTIONS
     *(.gnu.linkonce.b.*)
     *(COMMON)
     . = ALIGN(4);
-  } >ram AT>ram 
+  } >ram AT>ram
 
   . = ALIGN(8);
   PROVIDE( _end = . ); /*0X2000,0340*/
@@ -168,7 +168,7 @@ SECTIONS
 
   .stack ORIGIN(ram) + LENGTH(ram) - __stack_size :
   {
-    PROVIDE( _heap_end = . ); 
+    PROVIDE( _heap_end = . );
     . = __stack_size;  
     PROVIDE( _sp = . ); 
   } >ram AT>ram 

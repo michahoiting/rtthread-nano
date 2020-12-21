@@ -519,6 +519,8 @@ rt_err_t rt_thread_sleep(rt_tick_t tick)
     rt_timer_control(&(thread->thread_timer), RT_TIMER_CTRL_SET_TIME, &tick);
     rt_timer_start(&(thread->thread_timer));
 
+    RT_DEBUG_LOG(RT_DEBUG_THREAD, ("thread suspended till tick: %d\n", tick));
+
     /* enable interrupt */
     rt_hw_interrupt_enable(temp);
 
@@ -527,6 +529,8 @@ rt_err_t rt_thread_sleep(rt_tick_t tick)
     /* clear error number of this thread to RT_EOK */
     if (thread->error == -RT_ETIMEOUT)
         thread->error = RT_EOK;
+
+    RT_DEBUG_LOG(RT_DEBUG_THREAD, ("thread sleep woke up [%d]\n", thread->error));
 
     return RT_EOK;
 }
@@ -743,7 +747,7 @@ rt_err_t rt_thread_suspend(rt_thread_t thread)
     RT_ASSERT(thread != RT_NULL);
     RT_ASSERT(rt_object_get_type((rt_object_t)thread) == RT_Object_Class_Thread);
 
-    RT_DEBUG_LOG(RT_DEBUG_THREAD, ("thread suspend:  %s\n", thread->name));
+    RT_DEBUG_LOG(RT_DEBUG_THREAD, ("thread suspend: %s\n", thread->name));
 
     stat = thread->stat & RT_THREAD_STAT_MASK;
     if ((stat != RT_THREAD_READY) && (stat != RT_THREAD_RUNNING))
@@ -836,6 +840,8 @@ void rt_thread_timeout(void *parameter)
     RT_ASSERT(thread != RT_NULL);
     RT_ASSERT((thread->stat & RT_THREAD_STAT_MASK) == RT_THREAD_SUSPEND);
     RT_ASSERT(rt_object_get_type((rt_object_t)thread) == RT_Object_Class_Thread);
+
+    RT_DEBUG_LOG(RT_DEBUG_THREAD, ("thread timer timeout: %s\n", thread->name));
 
     /* set error number */
     thread->error = -RT_ETIMEOUT;

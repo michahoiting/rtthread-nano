@@ -190,7 +190,7 @@ void rt_system_scheduler_init(void)
     rt_scheduler_lock_nest = 0;
 #endif /*RT_USING_SMP*/
 
-    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER, ("start scheduler: max priority 0x%02x\n",
+    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER, ("init scheduler: max priority 0x%02x\n",
                                       RT_THREAD_PRIORITY_MAX));
 
     for (offset = 0; offset < RT_THREAD_PRIORITY_MAX; offset ++)
@@ -249,6 +249,13 @@ void rt_system_scheduler_start(void)
 
     rt_schedule_remove_thread(to_thread);
     to_thread->stat = RT_THREAD_RUNNING;
+
+    /* switch to new thread */
+    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER,
+            ("start scheduler switch context to RUNNING priority#%d "
+                "thread:%.*s(sp:0x%08x)\n",
+                highest_ready_priority,
+                RT_NAME_MAX, to_thread->name, to_thread->sp));
 
     /* switch to new thread */
 #ifdef RT_USING_SMP
@@ -415,6 +422,11 @@ void rt_schedule(void)
     /* disable interrupt */
     level = rt_hw_interrupt_disable();
 
+    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER,
+            ("> schedule [%d] current thread:%.*s(sp: 0x%08x)\n",
+            rt_interrupt_nest,
+            RT_NAME_MAX, rt_current_thread->name, rt_current_thread->sp));
+
     /* check the scheduler is enabled or not */
     if (rt_scheduler_lock_nest == 0)
     {
@@ -463,7 +475,7 @@ void rt_schedule(void)
 
                 /* switch to new thread */
                 RT_DEBUG_LOG(RT_DEBUG_SCHEDULER,
-                        ("[%d]switch to priority#%d "
+                        ("[%d] switch to priority#%d "
                          "thread:%.*s(sp:0x%08x), "
                          "from thread:%.*s(sp: 0x%08x)\n",
                          rt_interrupt_nest, highest_ready_priority,
@@ -507,7 +519,7 @@ void rt_schedule(void)
                 }
                 else
                 {
-                    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER, ("switch in interrupt\n"));
+                    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER, ("switch while leaving interrupt\n"));
 
                     rt_hw_context_switch_interrupt((rt_ubase_t)&from_thread->sp,
                             (rt_ubase_t)&to_thread->sp);
@@ -525,6 +537,12 @@ void rt_schedule(void)
     rt_hw_interrupt_enable(level);
 
 __exit:
+
+    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER,
+            ("< schedule [%d] current thread:%.*s(sp: 0x%08x)\n",
+            rt_interrupt_nest,
+            RT_NAME_MAX, rt_current_thread->name, rt_current_thread->sp));
+
     return;
 }
 #endif /*RT_USING_SMP*/
@@ -708,9 +726,15 @@ void rt_schedule_insert_thread(struct rt_thread *thread)
     /* it's current thread, it should be RUNNING thread */
     if (thread == rt_current_thread)
     {
+        RT_DEBUG_LOG(RT_DEBUG_SCHEDULER, ("re-insert RUNNING thread[%.*s]\n", RT_NAME_MAX, thread->name));
+
         thread->stat = RT_THREAD_RUNNING | (thread->stat & ~RT_THREAD_STAT_MASK);
         goto __exit;
     }
+
+    RT_DEBUG_LOG(RT_DEBUG_SCHEDULER, ("insert ready thread[%.*s], current thread[%.*s]\n",
+        RT_NAME_MAX, thread->name,
+        RT_NAME_MAX, rt_current_thread->name));
 
     /* READY thread, insert to ready queue */
     thread->stat = RT_THREAD_READY | (thread->stat & ~RT_THREAD_STAT_MASK);

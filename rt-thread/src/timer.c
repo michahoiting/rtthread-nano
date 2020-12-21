@@ -46,6 +46,10 @@ ALIGN(RT_ALIGN_SIZE)
 static rt_uint8_t timer_thread_stack[RT_TIMER_THREAD_STACK_SIZE];
 #endif
 
+#ifndef RT_USING_SMP
+extern volatile rt_uint8_t rt_interrupt_nest;
+#endif
+
 #ifdef RT_USING_HOOK
 extern void (*rt_object_take_hook)(struct rt_object *object);
 extern void (*rt_object_put_hook)(struct rt_object *object);
@@ -526,6 +530,8 @@ RTM_EXPORT(rt_timer_control);
  *
  * @note this function shall be invoked in operating system timer interrupt.
  */
+int has_timer_fired = 0;
+
 void rt_timer_check(void)
 {
     struct rt_timer *t;
@@ -533,7 +539,7 @@ void rt_timer_check(void)
     register rt_base_t level;
     rt_list_t list = RT_LIST_OBJECT_INIT(list);
 
-    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check enter\n"));
+//    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check enter\n"));
 
     current_tick = rt_tick_get();
 
@@ -553,6 +559,11 @@ void rt_timer_check(void)
         {
             RT_OBJECT_HOOK_CALL(rt_timer_enter_hook, (t));
 
+            RT_DEBUG_LOG(RT_DEBUG_TIMER, ("[%d] current tick: %d, timeout tick: %d\n",
+                rt_interrupt_nest, current_tick, t->timeout_tick));
+
+           has_timer_fired = 1;
+
             /* remove timer from timer list firstly */
             _rt_timer_remove(t);
             if (!(t->parent.flag & RT_TIMER_FLAG_PERIODIC))
@@ -568,7 +579,6 @@ void rt_timer_check(void)
             current_tick = rt_tick_get();
 
             RT_OBJECT_HOOK_CALL(rt_timer_exit_hook, (t));
-            RT_DEBUG_LOG(RT_DEBUG_TIMER, ("current tick: %d\n", current_tick));
 
             /* Check whether the timer object is detached or started again */
             if (rt_list_isempty(&list))
@@ -590,7 +600,14 @@ void rt_timer_check(void)
     /* enable interrupt */
     rt_hw_interrupt_enable(level);
 
-    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check leave\n"));
+    if (has_timer_fired) {
+        RT_DEBUG_LOG(RT_DEBUG_TIMER, ("< rt_timer_check [%d] returning to current thread:%.*s(sp:0x%08x)\n",
+                rt_interrupt_nest,
+                RT_NAME_MAX, rt_thread_self()->name, rt_thread_self()->sp));
+        has_timer_fired = 0;
+    }
+
+//    RT_DEBUG_LOG(RT_DEBUG_TIMER, ("timer check leave\n"));
 }
 
 /**
@@ -634,6 +651,8 @@ void rt_soft_timer_check(void)
         if ((current_tick - t->timeout_tick) < RT_TICK_MAX / 2)
         {
             RT_OBJECT_HOOK_CALL(rt_timer_enter_hook, (t));
+
+            RT_DEBUG_LOG(RT_DEBUG_TIMER, ("current tick: %d, soft timeout tick: %d\n", current_tick, t->timeout_tick));
 
             /* remove timer from timer list firstly */
             _rt_timer_remove(t);

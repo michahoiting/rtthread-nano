@@ -6,7 +6,7 @@ MEMORY
 { 
     /* Run in FLASH */ 
     flash (rxai!w) : ORIGIN = 0x08000000, LENGTH = 128k
-    ram   (wxa!ri) : ORIGIN = 0x20000000, LENGTH = 32K 
+    ram   (wxa!ri) : ORIGIN = 0x20000000, LENGTH = 32K
 
     /* Run in RAM */ 
 /* flash (rxai!w) : ORIGIN = 0x20000000, LENGTH = 24k
@@ -18,7 +18,6 @@ MEMORY
 SECTIONS
 {
   __stack_size = DEFINED(__stack_size) ? __stack_size : 2K;
-
 
   .init           :
   {

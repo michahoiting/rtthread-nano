@@ -72,6 +72,9 @@ typedef enum
     LED1 = 0,
     LED2 = 1,
     LED3 = 2,
+    LED4 = 3,
+    LED5 = 4,
+    LED6 = 5,
 } led_typedef_enum;
 
 typedef enum 
@@ -86,7 +89,7 @@ typedef enum
 } keymode_typedef_enum;
 
 /* sipeed longan nano board low layer led */
-#define LEDn                             3U
+#define LEDn                             6U
 
 /* red led */
 #define LONGAN_NANO_LED1_PIN                         GPIO_PIN_13
@@ -102,6 +105,21 @@ typedef enum
 #define LONGAN_NANO_LED3_PIN                         GPIO_PIN_2
 #define LONGAN_NANO_LED3_GPIO_PORT                   GPIOA
 #define LONGAN_NANO_LED3_GPIO_CLK                    RCU_GPIOA
+
+/* led A4*/
+#define LONGAN_NANO_LED4_PIN                         GPIO_PIN_4
+#define LONGAN_NANO_LED4_GPIO_PORT                   GPIOA
+#define LONGAN_NANO_LED4_GPIO_CLK                    RCU_GPIOA
+
+/* led A5*/
+#define LONGAN_NANO_LED5_PIN                         GPIO_PIN_5
+#define LONGAN_NANO_LED5_GPIO_PORT                   GPIOA
+#define LONGAN_NANO_LED5_GPIO_CLK                    RCU_GPIOA
+
+/* led A6*/
+#define LONGAN_NANO_LED6_PIN                         GPIO_PIN_6
+#define LONGAN_NANO_LED6_GPIO_PORT                   GPIOA
+#define LONGAN_NANO_LED6_GPIO_CLK                    RCU_GPIOA
 
 #define COMn                             3U
 

@@ -70,6 +70,7 @@ irq_entry:
     la    s0, rt_thread_switch_interrupt_flag
     lw    s2, 0(s0)
     beqz  s2, spurious_interrupt
+
     /* clear switch interrupt flag */
     sw    zero, 0(s0)
 

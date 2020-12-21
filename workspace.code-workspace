@@ -3,13 +3,11 @@
 		{
 			"path": "."
 		},
-		{
-			"path": "../rt-thread"
-		}
 	],
 	"settings": {
 		"files.associations": {
-			"cstring": "c"
+			"cstring": "c",
+			"cstdio": "c"
 		},
 		"C_Cpp.default.includePath": [ 
 			"/opt/riscv/riscv32-unknown-elf/include",
